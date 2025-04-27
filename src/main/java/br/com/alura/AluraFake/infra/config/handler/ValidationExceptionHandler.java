@@ -1,5 +1,6 @@
-package br.com.alura.AluraFake.util;
+package br.com.alura.AluraFake.infra.config.handler;
 
+import br.com.alura.AluraFake.util.ErrorItemDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,4 +19,5 @@ public class ValidationExceptionHandler {
         List<ErrorItemDTO> errors = ex.getBindingResult().getFieldErrors().stream().map(ErrorItemDTO::new).toList();
         return ResponseEntity.badRequest().body(errors);
     }
+
 }

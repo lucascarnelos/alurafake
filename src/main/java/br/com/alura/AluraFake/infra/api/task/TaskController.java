@@ -1,4 +1,4 @@
-package br.com.alura.AluraFake.task;
+package br.com.alura.AluraFake.infra.api.task;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

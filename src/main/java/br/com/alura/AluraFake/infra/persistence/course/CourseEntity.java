@@ -1,13 +1,14 @@
-package br.com.alura.AluraFake.course;
+package br.com.alura.AluraFake.infra.persistence.course;
 
-import br.com.alura.AluraFake.user.User;
+import br.com.alura.AluraFake.core.course.Status;
+import br.com.alura.AluraFake.infra.persistence.user.UserEntity;
 import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Course {
+public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +17,15 @@ public class Course {
     private String title;
     private String description;
     @ManyToOne
-    private User instructor;
+    private UserEntity instructor;
     @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDateTime publishedAt;
 
     @Deprecated
-    public Course(){}
+    public CourseEntity(){}
 
-    public Course(String title, String description, User instructor) {
+    public CourseEntity(String title, String description, UserEntity instructor) {
         Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
         this.title = title;
         this.instructor = instructor;
@@ -48,7 +49,7 @@ public class Course {
         this.status = status;
     }
 
-    public User getInstructor() {
+    public UserEntity getInstructor() {
         return instructor;
     }
 

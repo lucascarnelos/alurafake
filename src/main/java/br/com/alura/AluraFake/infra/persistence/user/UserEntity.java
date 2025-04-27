@@ -1,12 +1,13 @@
-package br.com.alura.AluraFake.user;
+package br.com.alura.AluraFake.infra.persistence.user;
 
+import br.com.alura.AluraFake.core.user.Role;
 import br.com.alura.AluraFake.util.PasswordGeneration;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +21,16 @@ public class User {
     private String password;
 
     @Deprecated
-    public User() {}
+    public UserEntity() {}
 
-    public User(String name, String email, Role role, String password) {
+    public UserEntity(String name, String email, Role role, String password) {
         this.name = name;
         this.role = role;
         this.email = email;
         this.password = password;
     }
 
-    public User(String name, String email, Role role) {
+    public UserEntity(String name, String email, Role role) {
         this(name, email, role, PasswordGeneration.generatePassword());
     }
 

@@ -1,6 +1,12 @@
 package br.com.alura.AluraFake.course;
 
-import br.com.alura.AluraFake.user.*;
+import br.com.alura.AluraFake.core.course.Course;
+import br.com.alura.AluraFake.core.user.Role;
+import br.com.alura.AluraFake.core.user.User;
+import br.com.alura.AluraFake.infra.api.course.CourseController;
+import br.com.alura.AluraFake.infra.api.course.dto.NewCourseDTO;
+import br.com.alura.AluraFake.infra.persistence.course.CourseRepository;
+import br.com.alura.AluraFake.infra.persistence.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CourseController.class)
-class CourseControllerTest {
+class StatusEntityControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

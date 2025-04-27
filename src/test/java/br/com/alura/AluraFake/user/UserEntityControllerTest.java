@@ -1,5 +1,10 @@
 package br.com.alura.AluraFake.user;
 
+import br.com.alura.AluraFake.core.user.Role;
+import br.com.alura.AluraFake.core.user.User;
+import br.com.alura.AluraFake.infra.api.user.dto.NewUserDTO;
+import br.com.alura.AluraFake.infra.api.user.UserController;
+import br.com.alura.AluraFake.infra.persistence.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
-class UserControllerTest {
+class UserEntityControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -90,15 +95,15 @@ class UserControllerTest {
 
     @Test
     void listAllUsers__should_list_all_users() throws Exception {
-        User user1 = new User("User 1", "user1@test.com",Role.STUDENT);
-        User user2 = new User("User 2", "user2@test.com",Role.STUDENT);
+        User user1 = new User("UserEntity 1", "user1@test.com",Role.STUDENT);
+        User user2 = new User("UserEntity 2", "user2@test.com",Role.STUDENT);
         when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
 
         mockMvc.perform(get("/user/all")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("User 1"))
-                .andExpect(jsonPath("$[1].name").value("User 2"));
+                .andExpect(jsonPath("$[0].name").value("UserEntity 1"))
+                .andExpect(jsonPath("$[1].name").value("UserEntity 2"));
     }
 
 }
