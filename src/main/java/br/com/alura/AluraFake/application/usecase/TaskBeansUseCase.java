@@ -2,14 +2,8 @@ package br.com.alura.AluraFake.application.usecase;
 
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
-import br.com.alura.AluraFake.core.usecase.task.CreateOpenTextTaskUseCase;
-import br.com.alura.AluraFake.core.usecase.task.CreateSingleChoiceTaskUseCase;
-import br.com.alura.AluraFake.core.usecase.task.OrderingTasksUseCase;
-import br.com.alura.AluraFake.core.usecase.task.ValidaTaskUseCase;
-import br.com.alura.AluraFake.core.usecase.task.impl.CreateOpenTextTaskUseCaseImpl;
-import br.com.alura.AluraFake.core.usecase.task.impl.CreateSingleChoiceTaskUseCaseImpl;
-import br.com.alura.AluraFake.core.usecase.task.impl.OrderingTasksUseCaseImpl;
-import br.com.alura.AluraFake.core.usecase.task.impl.ValidaTaskUseCaseImpl;
+import br.com.alura.AluraFake.core.usecase.task.*;
+import br.com.alura.AluraFake.core.usecase.task.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,6 +27,12 @@ public class TaskBeansUseCase {
     public CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase(ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase){
         return new CreateSingleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway,validaTaskUseCase, orderingTasksUseCase);
     }
+
+    @Bean
+    public CreateMultipleChoiceTaskUseCase createMultipleChoiceTaskUseCase(ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase){
+        return new CreateMultipleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway,validaTaskUseCase, orderingTasksUseCase);
+    }
+
 
     @Bean
     public ValidaTaskUseCase validaTaskUseCase(){
