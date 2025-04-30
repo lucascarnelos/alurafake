@@ -1,5 +1,6 @@
 package br.com.alura.AluraFake.infra.api.task;
 
+import br.com.alura.AluraFake.core.usecase.task.CreateMultipleChoiceTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.CreateOpenTextTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.CreateSingleChoiceTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.input.CreateTaskInput;
@@ -14,10 +15,12 @@ public class TaskController {
 
     private final CreateOpenTextTaskUseCase createOpenTextTaskUseCase;
     private final CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase;
+    private final CreateMultipleChoiceTaskUseCase multipleChoiceTaskUseCase;
 
-    public TaskController(CreateOpenTextTaskUseCase createOpenTextTaskUseCase, CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase) {
+    public TaskController(CreateOpenTextTaskUseCase createOpenTextTaskUseCase, CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase, CreateMultipleChoiceTaskUseCase multipleChoiceTaskUseCase) {
         this.createOpenTextTaskUseCase = createOpenTextTaskUseCase;
         this.createSingleChoiceTaskUseCase = createSingleChoiceTaskUseCase;
+        this.multipleChoiceTaskUseCase = multipleChoiceTaskUseCase;
     }
 
     @PostMapping("/task/new/opentext")
@@ -33,7 +36,8 @@ public class TaskController {
     }
 
     @PostMapping("/task/new/multiplechoice")
-    public ResponseEntity newMultipleChoice() {
+    public ResponseEntity newMultipleChoice(@RequestBody @Valid NewTaskDTO newTaskDTO) {
+        multipleChoiceTaskUseCase.execute(newTaskDTO.createTaskInput());
         return ResponseEntity.ok().build();
     }
 
