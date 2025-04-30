@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.core.usecase.task.CreateOpenTextTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.input.CreateTaskInput;
 import br.com.alura.AluraFake.infra.api.task.dto.NewTaskDTO;
 import br.com.alura.AluraFake.infra.mapper.TaskMapper;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TaskController {
     }
 
     @PostMapping("/task/new/opentext")
-    public ResponseEntity newOpenTextExercise(NewTaskDTO newTaskDTO) {
+    public ResponseEntity newOpenTextExercise(@RequestBody @Valid NewTaskDTO newTaskDTO) {
         createOpenTextTaskUseCase.execute(newTaskDTO.createTaskInput());
         return ResponseEntity.ok().build();
     }

@@ -1,34 +1,32 @@
-package br.com.alura.AluraFake.core.model.task;
+package br.com.alura.AluraFake.infra.persistence.task;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-public class TaskOption {
+@Entity(name = "TaskOption")
+public class TaskOptionEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime createdAt;
-    private Task task;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private TaskEntity task;
+    @Column(name = "option_string")
     private String option;
     private Boolean isCorrect;
 
-    public TaskOption() {
+    public TaskOptionEntity() {
     }
 
-    public TaskOption(Long id, LocalDateTime createdAt, Task task, String option, Boolean isCorrect) {
+    public TaskOptionEntity(Long id, LocalDateTime createdAt, TaskEntity task, String option, Boolean isCorrect) {
         this.id = id;
         this.createdAt = createdAt;
         this.task = task;
         this.option = option;
         this.isCorrect = isCorrect;
-    }
-
-    public static TaskOption Create(Task task, String option, Boolean isCorrect){
-        return new TaskOption(
-                null,
-                LocalDateTime.now(),
-                task,
-                option,
-                isCorrect
-        );
     }
 
     public Long getId() {
@@ -39,11 +37,19 @@ public class TaskOption {
         this.id = id;
     }
 
-    public Task getTask() {
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public TaskEntity getTask() {
         return task;
     }
 
-    public void setTask(Task task) {
+    public void setTask(TaskEntity task) {
         this.task = task;
     }
 
@@ -61,13 +67,5 @@ public class TaskOption {
 
     public void setCorrect(Boolean correct) {
         isCorrect = correct;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }
