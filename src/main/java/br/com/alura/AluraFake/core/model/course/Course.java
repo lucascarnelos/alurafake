@@ -1,39 +1,37 @@
-package br.com.alura.AluraFake.infra.persistence.course;
+package br.com.alura.AluraFake.core.model.course;
 
-import br.com.alura.AluraFake.core.model.course.Status;
-import br.com.alura.AluraFake.infra.persistence.user.UserEntity;
-import jakarta.persistence.*;
-import org.springframework.util.Assert;
+import br.com.alura.AluraFake.core.model.user.User;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class CourseEntity {
+public class Course {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime createdAt = LocalDateTime.now();
     private String title;
     private String description;
-    @ManyToOne
-    private UserEntity instructor;
-    @Enumerated(EnumType.STRING)
+    private User instructor;
     private Status status;
     private LocalDateTime publishedAt;
 
-    @Deprecated
-    public CourseEntity(){}
+    public Course(){}
 
-    public CourseEntity(String title, String description, UserEntity instructor) {
-        Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
-        this.title = title;
-        this.instructor = instructor;
-        this.description = description;
-        this.status = Status.BUILDING;
+    public static Course Create(String title, String description, User instructor) {
+        if(instructor.isInstructor()){
+            throw new RuntimeException("Usuario deve ser um instrutor");
+        }
+        return new Course(
+              null,
+              null,
+              title,
+              description,
+              instructor,
+              Status.BUILDING,
+              null
+        );
     }
 
-    public CourseEntity(Long id, LocalDateTime createdAt, String title, String description, UserEntity instructor, Status status, LocalDateTime publishedAt) {
+    public Course(Long id, LocalDateTime createdAt, String title, String description, User instructor, Status status, LocalDateTime publishedAt) {
         this.id = id;
         this.createdAt = createdAt;
         this.title = title;
@@ -59,7 +57,7 @@ public class CourseEntity {
         this.status = status;
     }
 
-    public UserEntity getInstructor() {
+    public User getInstructor() {
         return instructor;
     }
 

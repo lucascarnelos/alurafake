@@ -1,36 +1,29 @@
-package br.com.alura.AluraFake.infra.persistence.user;
+package br.com.alura.AluraFake.core.model.user;
 
-import br.com.alura.AluraFake.core.model.user.Role;
 import br.com.alura.AluraFake.util.PasswordGeneration;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class UserEntity {
+public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime createdAt = LocalDateTime.now();
     private String name;
-    @Enumerated(EnumType.STRING)
     private Role role;
     private String email;
     // Por questões didáticas, a senha será armazenada em texto plano.
     private String password;
 
-    @Deprecated
-    public UserEntity() {}
+    public User() {}
 
-    public UserEntity(String name, String email, Role role, String password) {
+    public User(String name, String email, Role role, String password) {
         this.name = name;
         this.role = role;
         this.email = email;
         this.password = password;
     }
 
-    public UserEntity(String name, String email, Role role) {
+    public User(String name, String email, Role role) {
         this(name, email, role, PasswordGeneration.generatePassword());
     }
 

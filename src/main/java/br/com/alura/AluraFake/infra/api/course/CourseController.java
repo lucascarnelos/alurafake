@@ -1,55 +1,45 @@
 package br.com.alura.AluraFake.infra.api.course;
 
-import br.com.alura.AluraFake.core.user.User;
-import br.com.alura.AluraFake.core.course.Course;
+import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
+import br.com.alura.AluraFake.core.usecase.course.input.CreateCourseInput;
+import br.com.alura.AluraFake.core.usecase.course.CreateCourseUseCase;
+import br.com.alura.AluraFake.core.usecase.user.VerifyUserExistsUseCase;
 import br.com.alura.AluraFake.infra.api.course.dto.CourseListItemDTO;
 import br.com.alura.AluraFake.infra.api.course.dto.NewCourseDTO;
-import br.com.alura.AluraFake.infra.persistence.course.CourseRepository;
-import br.com.alura.AluraFake.infra.persistence.user.UserRepository;
-import br.com.alura.AluraFake.util.ErrorItemDTO;
+import br.com.alura.AluraFake.infra.mapper.CourseMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 public class CourseController {
 
-    private final CourseRepository courseRepository;
-    private final UserRepository userRepository;
+    private final CoursePersistenceGateway coursePersistenceGateway;
+    private final VerifyUserExistsUseCase verifyUserExistsUseCase;
+    private final CreateCourseUseCase createCourseUseCase;
 
     @Autowired
-    public CourseController(CourseRepository courseRepository, UserRepository userRepository){
-        this.courseRepository = courseRepository;
-        this.userRepository = userRepository;
+    public CourseController(CoursePersistenceGateway coursePersistenceGateway, VerifyUserExistsUseCase verifyUserExistsUseCase, CreateCourseUseCase createCourseUseCase){
+        this.coursePersistenceGateway = coursePersistenceGateway;
+        this.verifyUserExistsUseCase = verifyUserExistsUseCase;
+        this.createCourseUseCase = createCourseUseCase;
     }
 
     @Transactional
     @PostMapping("/course/new")
     public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
-
-        //Caso implemente o bonus, pegue o instrutor logado
-        Optional<User> possibleAuthor = userRepository
-                .findByEmail(newCourse.getEmailInstructor())
-                .filter(User::isInstructor);
-
-        if(possibleAuthor.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
-        }
-
-        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
-
-        courseRepository.save(course);
+        createCourseUseCase.execute(new CreateCourseInput(CourseMapper.dtoToDomain(newCourse), newCourse.getEmailInstructor()));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/course/all")
     public ResponseEntity<List<CourseListItemDTO>> createCourse() {
-        List<CourseListItemDTO> courses = courseRepository.findAll().stream()
+        List<CourseListItemDTO> courses = coursePersistenceGateway.findAll().stream()
                 .map(CourseListItemDTO::new)
                 .toList();
         return ResponseEntity.ok(courses);

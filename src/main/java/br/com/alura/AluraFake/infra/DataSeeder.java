@@ -1,9 +1,11 @@
 package br.com.alura.AluraFake.infra;
 
-import br.com.alura.AluraFake.core.course.Course;
-import br.com.alura.AluraFake.core.user.Role;
-import br.com.alura.AluraFake.core.user.User;
+import br.com.alura.AluraFake.core.model.course.Course;
+import br.com.alura.AluraFake.core.model.user.Role;
+import br.com.alura.AluraFake.core.model.user.User;
+import br.com.alura.AluraFake.infra.persistence.course.CourseEntity;
 import br.com.alura.AluraFake.infra.persistence.course.CourseRepository;
+import br.com.alura.AluraFake.infra.persistence.user.UserEntity;
 import br.com.alura.AluraFake.infra.persistence.user.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -30,10 +32,10 @@ public class DataSeeder implements CommandLineRunner {
         if (!"dev".equals(activeProfile)) return;
 
         if (userRepository.count() == 0) {
-            User caio = new User("Caio", "caio@alura.com.br", Role.STUDENT);
-            User paulo = new User("Paulo", "paulo@alura.com.br", Role.INSTRUCTOR);
+            UserEntity caio = new UserEntity("Caio", "caio@alura.com.br", Role.STUDENT);
+            UserEntity paulo = new UserEntity("Paulo", "paulo@alura.com.br", Role.INSTRUCTOR);
             userRepository.saveAll(Arrays.asList(caio, paulo));
-            courseRepository.save(new Course("Java", "Aprenda Java com Alura", paulo));
+            courseRepository.save(new CourseEntity("Java", "Aprenda Java com Alura", paulo));
         }
     }
 }
