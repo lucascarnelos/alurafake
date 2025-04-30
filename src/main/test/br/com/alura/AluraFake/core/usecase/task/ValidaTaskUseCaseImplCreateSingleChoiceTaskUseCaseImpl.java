@@ -1,6 +1,6 @@
 package br.com.alura.AluraFake.core.usecase.task;
 
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Course;
 import br.com.alura.AluraFake.core.model.course.Status;
@@ -47,7 +47,7 @@ public class ValidaTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.existsTaskSameStatement(course, "Questão inválida")).thenReturn(false);
 
-        assertThrows(TaskInvalidException.class, () -> validaTaskUseCase.execute(task));
+        assertThrows(InvalidTaskException.class, () -> validaTaskUseCase.execute(task));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ValidaTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.existsTaskSameStatement(course, "Questão com curso publicado")).thenReturn(false);
 
-        assertThrows(TaskInvalidException.class, () -> validaTaskUseCase.execute(task));
+        assertThrows(InvalidTaskException.class, () -> validaTaskUseCase.execute(task));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ValidaTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.existsTaskSameStatement(course, "Repetida")).thenReturn(true);
 
-        assertThrows(TaskInvalidException.class, () -> validaTaskUseCase.execute(task));
+        assertThrows(InvalidTaskException.class, () -> validaTaskUseCase.execute(task));
     }
 
 }

@@ -2,11 +2,11 @@ package br.com.alura.AluraFake.core.exception;
 
 import java.util.List;
 
-public class TaskInvalidException extends RuntimeException {
+public class InvalidTaskException extends RuntimeException {
 
     private List<ErrorItem> errors;
 
-    public TaskInvalidException(List<ErrorItem> errors) {
+    public InvalidTaskException(List<ErrorItem> errors) {
         this.errors = errors;
     }
 

@@ -1,14 +1,13 @@
 package br.com.alura.AluraFake.core.usecase.task;
 
 import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Course;
 import br.com.alura.AluraFake.core.model.course.Status;
 import br.com.alura.AluraFake.core.model.task.Task;
 import br.com.alura.AluraFake.core.model.task.Type;
-import br.com.alura.AluraFake.core.usecase.task.impl.CreateMultipleChoiceTaskUseCaseImpl;
 import br.com.alura.AluraFake.core.usecase.task.impl.CreateMultipleChoiceTaskUseCaseImpl;
 import br.com.alura.AluraFake.core.usecase.task.input.CreateTaskInput;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +52,7 @@ public class CreateMultipleChoiceTaskUseCaseImplTest {
 
         when(coursePersistenceGateway.findById(courseId)).thenReturn(course);
 
-        Task savedTask = Task.Create(Type.OPEN_TEXT, course, "Enunciado", 1, null);
+        Task savedTask = Task.Create(Type.MULTIPLE_CHOICE, course, "Enunciado", 1, null);
         when(taskPersistenceGateway.save(any(Task.class))).thenReturn(savedTask);
 
         Task result = useCase.execute(input);
@@ -87,10 +86,10 @@ public class CreateMultipleChoiceTaskUseCaseImplTest {
 
         when(coursePersistenceGateway.findById(courseId)).thenReturn(course);
 
-        Task savedTask = Task.Create(Type.OPEN_TEXT, course, "Enunciado", 1, null);
+        Task savedTask = Task.Create(Type.MULTIPLE_CHOICE, course, "Enunciado", 1, null);
         when(taskPersistenceGateway.save(any(Task.class))).thenReturn(savedTask);
 
-        assertThrows(TaskInvalidException.class, () -> useCase.execute(input));
+        assertThrows(InvalidTaskException.class, () -> useCase.execute(input));
     }
 
     @Test
@@ -119,7 +118,7 @@ public class CreateMultipleChoiceTaskUseCaseImplTest {
 
         when(coursePersistenceGateway.findById(courseId)).thenReturn(course);
 
-        assertThrows(TaskInvalidException.class, () -> useCase.execute(input));
+        assertThrows(InvalidTaskException.class, () -> useCase.execute(input));
 
 
         CreateTaskInput input2 = new CreateTaskInput(
@@ -135,7 +134,7 @@ public class CreateMultipleChoiceTaskUseCaseImplTest {
                         new CreateTaskInput.CreateTaskOption("Opção única", true)
                 )
         );
-        assertThrows(TaskInvalidException.class, () -> useCase.execute(input2));
+        assertThrows(InvalidTaskException.class, () -> useCase.execute(input2));
     }
 
 }

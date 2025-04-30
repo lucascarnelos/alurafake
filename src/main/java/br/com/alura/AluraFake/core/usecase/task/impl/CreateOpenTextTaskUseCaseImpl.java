@@ -31,7 +31,6 @@ public class CreateOpenTextTaskUseCaseImpl implements CreateOpenTextTaskUseCase 
         if(course == null)
             throw new CourseNotExistsException("");
 
-        //var taskOptions = input.options().stream().map(tskOpt -> TaskOption.Create(tskOpt.option(), tskOpt.isCorrect())).toList();
         var task = Task.Create(
                 Type.OPEN_TEXT,
                 course,

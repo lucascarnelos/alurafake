@@ -1,7 +1,7 @@
 package br.com.alura.AluraFake.core.usecase.task.impl;
 
 import br.com.alura.AluraFake.core.exception.ErrorItem;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Status;
 import br.com.alura.AluraFake.core.model.task.Task;
@@ -31,7 +31,7 @@ public class ValidaTaskUseCaseImpl implements ValidaTaskUseCase {
             errors.add(new ErrorItem("statement","O curso não pode ter duas questões com o mesmo enunciado"));
         }
         if(!errors.isEmpty())
-            throw new TaskInvalidException(errors);
+            throw new InvalidTaskException(errors);
 
     }
 
