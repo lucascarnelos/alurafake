@@ -1,6 +1,7 @@
 package br.com.alura.AluraFake.infra.exception;
 
 import br.com.alura.AluraFake.core.exception.EmailAlreadyExistsException;
+import br.com.alura.AluraFake.core.exception.TaskInvalidException;
 import br.com.alura.AluraFake.core.exception.UserNotInstructorException;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,11 @@ public class GlobalExceptionHandler {
                 .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
     }
 
+    @ExceptionHandler(TaskInvalidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleTaskInvalidException(TaskInvalidException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
 
 }

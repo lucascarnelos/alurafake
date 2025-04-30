@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class CourseMapper {
 
     public static CourseEntity domainToEntity(Course course){
+        if(course == null)
+            return new CourseEntity();
         return new CourseEntity(
                 course.getId(),
                 course.getCreatedAt(),
@@ -23,6 +25,8 @@ public class CourseMapper {
     }
 
     public static Course entityToDomain(CourseEntity course){
+        if(course == null)
+            return new Course();
         return new Course(
                 course.getId(),
                 course.getCreatedAt(),
@@ -35,6 +39,8 @@ public class CourseMapper {
     }
 
     public static Course dtoToDomain(NewCourseDTO newCourseDTO){
+        if(newCourseDTO == null)
+            return new Course();
         return new Course(
                 null,
                 null,

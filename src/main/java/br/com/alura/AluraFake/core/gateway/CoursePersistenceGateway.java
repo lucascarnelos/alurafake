@@ -10,4 +10,5 @@ public interface CoursePersistenceGateway {
 
     List<Course> findAll();
 
+    Course findById(Long id);
 }

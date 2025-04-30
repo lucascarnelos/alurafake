@@ -28,4 +28,9 @@ public class CourseRepositoryPersistenceGateway implements CoursePersistenceGate
     public List<Course> findAll() {
         return courseRepository.findAll().stream().map(CourseMapper::entityToDomain).toList();
     }
+
+    @Override
+    public Course findById(Long id) {
+        return courseRepository.findById(id).map(CourseMapper::entityToDomain).orElse(null);
+    }
 }
