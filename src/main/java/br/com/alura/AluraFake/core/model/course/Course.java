@@ -17,7 +17,7 @@ public class Course {
     public Course(){}
 
     public static Course Create(String title, String description, User instructor) {
-        if(instructor.isInstructor()){
+        if(!instructor.isInstructor()){
             throw new RuntimeException("Usuario deve ser um instrutor");
         }
         return new Course(

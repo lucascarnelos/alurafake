@@ -4,6 +4,7 @@ import br.com.alura.AluraFake.core.exception.EmailAlreadyExistsException;
 import br.com.alura.AluraFake.core.exception.TaskInvalidException;
 import br.com.alura.AluraFake.core.exception.UserNotInstructorException;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
+import br.com.alura.AluraFake.util.ListErrorItemDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,9 +40,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TaskInvalidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleTaskInvalidException(TaskInvalidException ex){
+    public ResponseEntity<ListErrorItemDTO> handleTaskInvalidException(TaskInvalidException ex){
+        var listErrorItemDTO = new ListErrorItemDTO(
+                "400",
+                ex.getErrors().stream().map(error -> new ErrorItemDTO(error.getField(), error.getMessage())).toList()
+        );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
+                .body(listErrorItemDTO);
     }
 
 }

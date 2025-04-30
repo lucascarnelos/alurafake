@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PasswordGenerationTest {
+class PasswordGenerationCreateSingleChoiceTaskUseCaseImpl {
 
     @Test
     void generatePassword__password_should_be_six_digits() {
