@@ -2,14 +2,13 @@ package br.com.alura.AluraFake.core.usecase.task.impl;
 
 import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
 import br.com.alura.AluraFake.core.exception.ErrorItem;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.task.Task;
 import br.com.alura.AluraFake.core.model.task.TaskOption;
 import br.com.alura.AluraFake.core.model.task.Type;
 import br.com.alura.AluraFake.core.usecase.task.CreateMultipleChoiceTaskUseCase;
-import br.com.alura.AluraFake.core.usecase.task.CreateSingleChoiceTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.OrderingTasksUseCase;
 import br.com.alura.AluraFake.core.usecase.task.ValidaTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.input.CreateTaskInput;
@@ -41,7 +40,7 @@ public class CreateMultipleChoiceTaskUseCaseImpl implements CreateMultipleChoice
 
 
         var task = Task.Create(
-                Type.OPEN_TEXT,
+                Type.MULTIPLE_CHOICE,
                 course,
                 input.statement(),
                 input.order(),
@@ -101,7 +100,7 @@ public class CreateMultipleChoiceTaskUseCaseImpl implements CreateMultipleChoice
         if(alternativaIgualEnunciadoError) errors.add(new ErrorItem("option","As alternativas não podem ser iguais ao enunciado da atividade."));
 
         if(!errors.isEmpty())
-            throw new TaskInvalidException(errors);
+            throw new InvalidTaskException(errors);
     }
 
 }

@@ -2,7 +2,7 @@ package br.com.alura.AluraFake.core.usecase.task.impl;
 
 import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
 import br.com.alura.AluraFake.core.exception.ErrorItem;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.task.Task;
@@ -40,7 +40,7 @@ public class CreateSingleChoiceTaskUseCaseImpl implements CreateSingleChoiceTask
 
 
         var task = Task.Create(
-                Type.OPEN_TEXT,
+                Type.SINGLE_CHOICE,
                 course,
                 input.statement(),
                 input.order(),
@@ -95,7 +95,7 @@ public class CreateSingleChoiceTaskUseCaseImpl implements CreateSingleChoiceTask
         if(alternativaIgualEnunciadoError) errors.add(new ErrorItem("option","As alternativas não podem ser iguais ao enunciado da atividade."));
 
         if(!errors.isEmpty())
-            throw new TaskInvalidException(errors);
+            throw new InvalidTaskException(errors);
     }
 
 }

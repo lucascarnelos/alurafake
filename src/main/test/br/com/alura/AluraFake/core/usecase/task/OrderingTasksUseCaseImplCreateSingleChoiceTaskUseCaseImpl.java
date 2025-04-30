@@ -1,6 +1,6 @@
 package br.com.alura.AluraFake.core.usecase.task;
 
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Course;
 import br.com.alura.AluraFake.core.model.task.Task;
@@ -55,7 +55,7 @@ public class OrderingTasksUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.findAllByCourseOrderByOrder(course)).thenReturn(List.of(task1, task2));
 
-        assertThrows(TaskInvalidException.class, () -> orderingTasksUseCase.execute(novaTask));
+        assertThrows(InvalidTaskException.class, () -> orderingTasksUseCase.execute(novaTask));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class OrderingTasksUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.findAllByCourseOrderByOrder(course)).thenReturn(List.of(task1, task2));
 
-        assertThrows(TaskInvalidException.class, () -> orderingTasksUseCase.execute(novaTask));
+        assertThrows(InvalidTaskException.class, () -> orderingTasksUseCase.execute(novaTask));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class OrderingTasksUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
         when(taskPersistenceGateway.findAllByCourseOrderByOrder(course)).thenReturn(List.of(task1, task2));
 
-        assertThrows(TaskInvalidException.class, () -> orderingTasksUseCase.execute(novaTask));
+        assertThrows(InvalidTaskException.class, () -> orderingTasksUseCase.execute(novaTask));
     }
 
 

@@ -1,7 +1,7 @@
 package br.com.alura.AluraFake.core.usecase.task;
 
 import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Course;
@@ -51,7 +51,7 @@ public class CreateSingleChoiceTaskUseCaseImplTest {
 
         when(coursePersistenceGateway.findById(courseId)).thenReturn(course);
 
-        Task savedTask = Task.Create(Type.OPEN_TEXT, course, "Enunciado", 1, null);
+        Task savedTask = Task.Create(Type.SINGLE_CHOICE, course, "Enunciado", 1, null);
         when(taskPersistenceGateway.save(any(Task.class))).thenReturn(savedTask);
 
         Task result = useCase.execute(input);
@@ -90,7 +90,7 @@ public class CreateSingleChoiceTaskUseCaseImplTest {
 
         when(coursePersistenceGateway.findById(courseId)).thenReturn(course);
 
-        assertThrows(TaskInvalidException.class, () -> useCase.execute(input));
+        assertThrows(InvalidTaskException.class, () -> useCase.execute(input));
 
 
         CreateTaskInput input2 = new CreateTaskInput(
@@ -106,7 +106,7 @@ public class CreateSingleChoiceTaskUseCaseImplTest {
                         new CreateTaskInput.CreateTaskOption("Opção única", true)
                 )
         );
-        assertThrows(TaskInvalidException.class, () -> useCase.execute(input2));
+        assertThrows(InvalidTaskException.class, () -> useCase.execute(input2));
     }
 
 }

@@ -1,7 +1,7 @@
 package br.com.alura.AluraFake.infra.exception;
 
 import br.com.alura.AluraFake.core.exception.EmailAlreadyExistsException;
-import br.com.alura.AluraFake.core.exception.TaskInvalidException;
+import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.exception.UserNotInstructorException;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
 import br.com.alura.AluraFake.util.ListErrorItemDTO;
@@ -38,9 +38,9 @@ public class GlobalExceptionHandler {
                 .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
     }
 
-    @ExceptionHandler(TaskInvalidException.class)
+    @ExceptionHandler(InvalidTaskException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ListErrorItemDTO> handleTaskInvalidException(TaskInvalidException ex){
+    public ResponseEntity<ListErrorItemDTO> handleTaskInvalidException(InvalidTaskException ex){
         var listErrorItemDTO = new ListErrorItemDTO(
                 "400",
                 ex.getErrors().stream().map(error -> new ErrorItemDTO(error.getField(), error.getMessage())).toList()

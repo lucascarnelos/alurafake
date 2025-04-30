@@ -1,6 +1,7 @@
 package br.com.alura.AluraFake.infra.api.course;
 
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
+import br.com.alura.AluraFake.core.usecase.course.PublishCourseUseCase;
 import br.com.alura.AluraFake.core.usecase.course.input.CreateCourseInput;
 import br.com.alura.AluraFake.core.usecase.course.CreateCourseUseCase;
 import br.com.alura.AluraFake.core.usecase.user.VerifyUserExistsUseCase;
@@ -20,14 +21,14 @@ import java.util.List;
 public class CourseController {
 
     private final CoursePersistenceGateway coursePersistenceGateway;
-    private final VerifyUserExistsUseCase verifyUserExistsUseCase;
     private final CreateCourseUseCase createCourseUseCase;
+    private final PublishCourseUseCase publishCourseUseCase;
 
     @Autowired
-    public CourseController(CoursePersistenceGateway coursePersistenceGateway, VerifyUserExistsUseCase verifyUserExistsUseCase, CreateCourseUseCase createCourseUseCase){
+    public CourseController(CoursePersistenceGateway coursePersistenceGateway, CreateCourseUseCase createCourseUseCase, PublishCourseUseCase publishCourseUseCase){
         this.coursePersistenceGateway = coursePersistenceGateway;
-        this.verifyUserExistsUseCase = verifyUserExistsUseCase;
         this.createCourseUseCase = createCourseUseCase;
+        this.publishCourseUseCase = publishCourseUseCase;
     }
 
     @Transactional
@@ -47,6 +48,7 @@ public class CourseController {
 
     @PostMapping("/course/{id}/publish")
     public ResponseEntity createCourse(@PathVariable("id") Long id) {
+        publishCourseUseCase.execute(id);
         return ResponseEntity.ok().build();
     }
 
