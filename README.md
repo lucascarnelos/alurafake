@@ -165,11 +165,11 @@ Para publicar um curso, ele deve:
 - O curso só pode ser publicado se o status for `BUILDING`.
 - Ter o `status` atualizado para `PUBLISHED` e `publishedAt` com a data atual.
 
-Implemente o endpoint `/course/{id}/publish` validando essas regras antes da publicação.
+Implemente o endpoint `/status/{id}/publish` validando essas regras antes da publicação.
 
 Exemplo de requisição:
 ```bash
-curl -w "%{http_code}\n" -X POST http://localhost:8080/course/42/publish
+curl -w "%{http_code}\n" -X POST http://localhost:8080/status/42/publish
 ```
 
 ### Bônus (não obrigatório)
