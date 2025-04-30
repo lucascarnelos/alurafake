@@ -1,5 +1,6 @@
 package br.com.alura.AluraFake.core.usecase.task.impl;
 
+import br.com.alura.AluraFake.core.exception.ErrorItem;
 import br.com.alura.AluraFake.core.exception.TaskInvalidException;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Status;
@@ -19,18 +20,18 @@ public class ValidaTaskUseCaseImpl implements ValidaTaskUseCase {
 
     @Override
     public void execute(Task task) {
-        StringBuilder stringBuilder = new StringBuilder();
+        List<ErrorItem> errors = new ArrayList<>();
         if(task.getOrder() <= 0){
-            stringBuilder.append("A ordem deve ser um número inteiro positivo");
+            errors.add(new ErrorItem("order","A ordem deve ser um número inteiro positivo"));
         }
         if(!Status.BUILDING.equals(task.getCourse().getStatus())){
-            stringBuilder.append("\nUm curso só pode receber atividades se seu status for BULDING");
+            errors.add(new ErrorItem("courseId","Um curso só pode receber atividades se seu status for BULDING"));
         }
         if(taskPersistenceGateway.existsTaskSameStatement(task.getCourse(), task.getStatement())){
-            stringBuilder.append("\nO curso não pode ter duas questões com o mesmo enunciado");
+            errors.add(new ErrorItem("statement","O curso não pode ter duas questões com o mesmo enunciado"));
         }
-        if(!stringBuilder.toString().isEmpty())
-            throw new TaskInvalidException(stringBuilder.toString());
+        if(!errors.isEmpty())
+            throw new TaskInvalidException(errors);
 
     }
 
