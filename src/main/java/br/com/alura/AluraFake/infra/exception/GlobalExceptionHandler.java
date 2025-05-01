@@ -1,6 +1,7 @@
 package br.com.alura.AluraFake.infra.exception;
 
 import br.com.alura.AluraFake.core.exception.EmailAlreadyExistsException;
+import br.com.alura.AluraFake.core.exception.InvalidCourseException;
 import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.exception.UserNotInstructorException;
 import br.com.alura.AluraFake.util.ErrorItemDTO;
@@ -40,7 +41,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidTaskException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ListErrorItemDTO> handleTaskInvalidException(InvalidTaskException ex){
+    public ResponseEntity<ListErrorItemDTO> handleInvalidTaskException(InvalidTaskException ex){
+        var listErrorItemDTO = new ListErrorItemDTO(
+                "400",
+                ex.getErrors().stream().map(error -> new ErrorItemDTO(error.getField(), error.getMessage())).toList()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(listErrorItemDTO);
+    }
+
+    @ExceptionHandler(InvalidCourseException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleInvalidCourseException(InvalidCourseException ex){
+        if(ex.getErrors() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ex.getMessage());
+        }
         var listErrorItemDTO = new ListErrorItemDTO(
                 "400",
                 ex.getErrors().stream().map(error -> new ErrorItemDTO(error.getField(), error.getMessage())).toList()

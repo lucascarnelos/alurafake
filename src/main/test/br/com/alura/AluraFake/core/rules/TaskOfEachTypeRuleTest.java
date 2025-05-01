@@ -1,9 +1,9 @@
-package br.com.alura.AluraFake.core.usecase.course;
+package br.com.alura.AluraFake.core.rules;
 
 import br.com.alura.AluraFake.core.exception.InvalidCourseException;
 import br.com.alura.AluraFake.core.model.task.Task;
 import br.com.alura.AluraFake.core.model.task.Type;
-import br.com.alura.AluraFake.core.usecase.course.rules.TaskOfEachTypeRule;
+import br.com.alura.AluraFake.core.rules.course.TaskOfEachTypeRule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ public class TaskOfEachTypeRuleTest {
         Task task2 = new Task(2L, null, Type.SINGLE_CHOICE, null, "B", 2, null);
         Task task3 = new Task(3L, null, Type.MULTIPLE_CHOICE, null, "C", 3, null);
 
-        assertDoesNotThrow(() -> rule.execute(List.of(task1, task2, task3)));
+        assertDoesNotThrow(() -> rule.execute(List.of(), List.of(task1, task2, task3)));
     }
 
     @Test
@@ -39,12 +39,12 @@ public class TaskOfEachTypeRuleTest {
         Task task2 = new Task(2L, null, Type.MULTIPLE_CHOICE, null, "B", 2, null);
         Task task3 = new Task(3L, null, null, null, "C", 3, null); // null não conta
 
-        assertThrows(InvalidCourseException.class, () -> rule.execute(List.of(task1, task2, task3)));
+        assertThrows(InvalidCourseException.class, () -> rule.execute(List.of(), List.of(task1, task2, task3)));
     }
 
     @Test
     void shouldThrowWhenListIsEmpty() {
-        assertThrows(InvalidCourseException.class, () -> rule.execute(List.of()));
+        assertThrows(InvalidCourseException.class, () -> rule.execute(List.of(), List.of()));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TaskOfEachTypeRuleTest {
         Task task4 = new Task(4L, null, null, null, "Sem tipo", 4, null);
         Task task5 = new Task(5L, null, Type.MULTIPLE_CHOICE, null, "C", 5, null);
 
-        assertDoesNotThrow(() -> rule.execute(List.of(task1, task2, task3, task4, task5)));
+        assertDoesNotThrow(() -> rule.execute(List.of(), List.of(task1, task2, task3, task4, task5)));
     }
 
 }

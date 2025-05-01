@@ -22,7 +22,7 @@ public class CreateOpenTextTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
 
     @Mock private TaskPersistenceGateway taskPersistenceGateway;
     @Mock private CoursePersistenceGateway coursePersistenceGateway;
-    @Mock private ValidaTaskUseCase validaTaskUseCase;
+    @Mock private GenericTaskValidateUseCase genericTaskValidateUseCase;
     @Mock private OrderingTasksUseCase orderingTasksUseCase;
     @InjectMocks private CreateOpenTextTaskUseCaseImpl createOpenTextTaskUseCase;
 
@@ -48,7 +48,7 @@ public class CreateOpenTextTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
         assertNotNull(result);
         assertEquals("Enunciado", result.getStatement());
 
-        verify(validaTaskUseCase).execute(any(Task.class));
+        verify(genericTaskValidateUseCase).execute(any(Task.class));
         verify(orderingTasksUseCase).execute(any(Task.class));
         verify(taskPersistenceGateway).save(any(Task.class));
     }

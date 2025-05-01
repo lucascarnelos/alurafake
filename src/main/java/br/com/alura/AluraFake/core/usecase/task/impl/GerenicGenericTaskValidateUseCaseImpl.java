@@ -5,16 +5,16 @@ import br.com.alura.AluraFake.core.exception.InvalidTaskException;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Status;
 import br.com.alura.AluraFake.core.model.task.Task;
-import br.com.alura.AluraFake.core.usecase.task.ValidaTaskUseCase;
+import br.com.alura.AluraFake.core.usecase.task.GenericTaskValidateUseCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidaTaskUseCaseImpl implements ValidaTaskUseCase {
+public class GerenicGenericTaskValidateUseCaseImpl implements GenericTaskValidateUseCase {
 
     private final TaskPersistenceGateway taskPersistenceGateway;
 
-    public ValidaTaskUseCaseImpl(TaskPersistenceGateway taskPersistenceGateway) {
+    public GerenicGenericTaskValidateUseCaseImpl(TaskPersistenceGateway taskPersistenceGateway) {
         this.taskPersistenceGateway = taskPersistenceGateway;
     }
 

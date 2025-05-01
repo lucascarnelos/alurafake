@@ -5,7 +5,7 @@ import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.course.Course;
 import br.com.alura.AluraFake.core.model.course.Status;
 import br.com.alura.AluraFake.core.model.task.Task;
-import br.com.alura.AluraFake.core.usecase.task.impl.ValidaTaskUseCaseImpl;
+import br.com.alura.AluraFake.core.usecase.task.impl.GerenicGenericTaskValidateUseCaseImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,11 +15,11 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ValidaTaskUseCaseImplCreateSingleChoiceTaskUseCaseImpl {
+public class TaskUseCaseImplCreateSingleChoiceGerenicGenericTaskValidateUseCaseImpl {
 
     @Mock
     private TaskPersistenceGateway taskPersistenceGateway;
-    @InjectMocks private ValidaTaskUseCaseImpl validaTaskUseCase;
+    @InjectMocks private GerenicGenericTaskValidateUseCaseImpl validaTaskUseCase;
 
     @BeforeEach
     void setUp() {
