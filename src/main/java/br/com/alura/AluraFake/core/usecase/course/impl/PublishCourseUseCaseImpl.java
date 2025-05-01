@@ -1,6 +1,7 @@
 package br.com.alura.AluraFake.core.usecase.course.impl;
 
 import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
+import br.com.alura.AluraFake.core.exception.ErrorItem;
 import br.com.alura.AluraFake.core.exception.InvalidCourseException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
@@ -8,9 +9,10 @@ import br.com.alura.AluraFake.core.model.course.Course;
 import br.com.alura.AluraFake.core.model.course.Status;
 import br.com.alura.AluraFake.core.model.task.Task;
 import br.com.alura.AluraFake.core.usecase.course.PublishCourseUseCase;
-import br.com.alura.AluraFake.core.usecase.course.rules.TaskOfEachTypeRule;
-import br.com.alura.AluraFake.core.usecase.course.rules.ValidationRule;
+import br.com.alura.AluraFake.core.rules.course.TaskOfEachTypeRule;
+import br.com.alura.AluraFake.core.rules.ValidationRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PublishCourseUseCaseImpl implements PublishCourseUseCase {
@@ -29,13 +31,18 @@ public class PublishCourseUseCaseImpl implements PublishCourseUseCase {
         if(course == null){
             throw new CourseNotExistsException("");
         }
+
         if(!Status.BUILDING.equals(course.getStatus()))
             throw new InvalidCourseException("");
 
         List<Task> tasks = taskPersistenceGateway.findAllByCourseOrderByOrder(course);
         //Ter atividades com order em sequência contínua (ex: 1, 2, 3...). - ESSA PARTE EU ENTENDO QUE JÁ VAI ESTAR VALIDADO AO CRIAR CADA TASK, CONFORME IMPLEMENTADO NOS USECASES
+        List<ErrorItem> errorItems = new ArrayList<>();
         for(ValidationRule<List<Task>> validationRule : List.of(new TaskOfEachTypeRule())){
-            validationRule.execute(tasks);
+            validationRule.execute(errorItems, tasks);
+        }
+        if(!errorItems.isEmpty()){
+            throw new InvalidCourseException(errorItems);
         }
 
         course.publish();

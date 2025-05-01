@@ -96,4 +96,16 @@ public class Task {
         this.options = options;
     }
 
+    public boolean isOpenText(){
+        return Type.OPEN_TEXT.equals(this.type);
+    }
+
+    public boolean isSingleChoice(){
+        return Type.SINGLE_CHOICE.equals(this.type);
+    }
+
+    public boolean isMultipleChoice(){
+        return Type.MULTIPLE_CHOICE.equals(this.type);
+    }
+
 }
