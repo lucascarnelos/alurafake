@@ -19,24 +19,28 @@ public class TaskBeansUseCase {
     }
 
     @Bean
-    public CreateOpenTextTaskUseCase createOpenTextTaskUseCase(ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase){
-        return new CreateOpenTextTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway,validaTaskUseCase, orderingTasksUseCase);
+    public CreateOpenTextTaskUseCase createOpenTextTaskUseCase(GenericTaskValidateUseCase genericTaskValidateUseCase, OrderingTasksUseCase orderingTasksUseCase){
+        return new CreateOpenTextTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway, genericTaskValidateUseCase, orderingTasksUseCase);
     }
 
     @Bean
-    public CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase(ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase){
-        return new CreateSingleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway,validaTaskUseCase, orderingTasksUseCase);
+    public CreateSingleChoiceTaskUseCase createSingleChoiceTaskUseCase(GenericTaskValidateUseCase genericTaskValidateUseCase, OrderingTasksUseCase orderingTasksUseCase, TaskWithChoiceValidateUseCase taskWithChoiceValidateUseCase){
+        return new CreateSingleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway, genericTaskValidateUseCase, orderingTasksUseCase, taskWithChoiceValidateUseCase);
     }
 
     @Bean
-    public CreateMultipleChoiceTaskUseCase createMultipleChoiceTaskUseCase(ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase){
-        return new CreateMultipleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway,validaTaskUseCase, orderingTasksUseCase);
+    public CreateMultipleChoiceTaskUseCase createMultipleChoiceTaskUseCase(GenericTaskValidateUseCase genericTaskValidateUseCase, OrderingTasksUseCase orderingTasksUseCase, TaskWithChoiceValidateUseCase taskWithChoiceValidateUseCase){
+        return new CreateMultipleChoiceTaskUseCaseImpl(taskPersistenceGateway,coursePersistenceGateway, genericTaskValidateUseCase, orderingTasksUseCase, taskWithChoiceValidateUseCase);
     }
 
+    @Bean
+    public GenericTaskValidateUseCase validaTaskUseCase(){
+        return new GerenicGenericTaskValidateUseCaseImpl(taskPersistenceGateway);
+    }
 
     @Bean
-    public ValidaTaskUseCase validaTaskUseCase(){
-        return new ValidaTaskUseCaseImpl(taskPersistenceGateway);
+    public TaskWithChoiceValidateUseCase taskWithChoiceValidateUseCase(){
+        return new TaskWithChoiceValidateUseCaseImpl();
     }
 
     @Bean

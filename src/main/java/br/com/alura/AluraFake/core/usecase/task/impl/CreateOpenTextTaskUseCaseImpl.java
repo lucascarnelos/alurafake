@@ -4,24 +4,23 @@ import br.com.alura.AluraFake.core.exception.CourseNotExistsException;
 import br.com.alura.AluraFake.core.gateway.CoursePersistenceGateway;
 import br.com.alura.AluraFake.core.gateway.TaskPersistenceGateway;
 import br.com.alura.AluraFake.core.model.task.Task;
-import br.com.alura.AluraFake.core.model.task.TaskOption;
 import br.com.alura.AluraFake.core.model.task.Type;
 import br.com.alura.AluraFake.core.usecase.task.CreateOpenTextTaskUseCase;
 import br.com.alura.AluraFake.core.usecase.task.OrderingTasksUseCase;
-import br.com.alura.AluraFake.core.usecase.task.ValidaTaskUseCase;
+import br.com.alura.AluraFake.core.usecase.task.GenericTaskValidateUseCase;
 import br.com.alura.AluraFake.core.usecase.task.input.CreateTaskInput;
 
 public class CreateOpenTextTaskUseCaseImpl implements CreateOpenTextTaskUseCase {
 
     private final TaskPersistenceGateway taskPersistenceGateway;
     private final CoursePersistenceGateway coursePersistenceGateway;
-    private final ValidaTaskUseCase validaTaskUseCase;
+    private final GenericTaskValidateUseCase genericTaskValidateUseCase;
     private final OrderingTasksUseCase orderingTasksUseCase;
 
-    public CreateOpenTextTaskUseCaseImpl(TaskPersistenceGateway taskPersistenceGateway, CoursePersistenceGateway coursePersistenceGateway, ValidaTaskUseCase validaTaskUseCase, OrderingTasksUseCase orderingTasksUseCase) {
+    public CreateOpenTextTaskUseCaseImpl(TaskPersistenceGateway taskPersistenceGateway, CoursePersistenceGateway coursePersistenceGateway, GenericTaskValidateUseCase genericTaskValidateUseCase, OrderingTasksUseCase orderingTasksUseCase) {
         this.taskPersistenceGateway = taskPersistenceGateway;
         this.coursePersistenceGateway = coursePersistenceGateway;
-        this.validaTaskUseCase = validaTaskUseCase;
+        this.genericTaskValidateUseCase = genericTaskValidateUseCase;
         this.orderingTasksUseCase = orderingTasksUseCase;
     }
 
@@ -39,7 +38,7 @@ public class CreateOpenTextTaskUseCaseImpl implements CreateOpenTextTaskUseCase 
                 null
         );
 
-        validaTaskUseCase.execute(task);
+        genericTaskValidateUseCase.execute(task);
         orderingTasksUseCase.execute(task);
         task = taskPersistenceGateway.save(task);
         return task;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class InvalidTaskException extends RuntimeException {
 
-    private List<ErrorItem> errors;
+    private final List<ErrorItem> errors;
 
     public InvalidTaskException(List<ErrorItem> errors) {
         this.errors = errors;
